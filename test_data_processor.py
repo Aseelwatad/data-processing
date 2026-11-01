@@ -3,7 +3,6 @@ import pytest
 from data_processor import check_columns_exist, rename_columns
 
 
-# Fixture: لتجهيز داتا وهمية سريعة بالذاكرة بدون فتح ملفات خارجية
 @pytest.fixture
 def sample_df():
     data = {
@@ -14,7 +13,7 @@ def sample_df():
     return pd.DataFrame(data)
 
 
-# Test 1 (Positive): التأكد من نجاح إعادة تسمية الأعمدة بالحالة الطبيعية
+# Test 1 (Positive)
 def test_rename_columns_positive(sample_df):
     mapping = {"Full_Name": "Employee_Name"}
     updated_df = rename_columns(sample_df, mapping)
@@ -23,7 +22,7 @@ def test_rename_columns_positive(sample_df):
     assert "Full_Name" not in updated_df.columns
 
 
-# Test 2 (Negative): التأكد من رمي KeyError إذا كان العمود المراد تعديله غير موجود
+# Test 2 (Negative)
 def test_rename_columns_missing_column(sample_df):
     invalid_mapping = {"Non_Existing_Column": "New_Name"}
 
@@ -31,7 +30,7 @@ def test_rename_columns_missing_column(sample_df):
         rename_columns(sample_df, invalid_mapping)
 
 
-# Test 3 (Edge Case / Validation): فحص دالة التحقق من الأعمدة بوجود عمود صح وعمود مفقود
+# Test 3 (Edge Case / Validation)
 def test_check_columns_exist_edge_case(sample_df):
     columns_to_check = ["Employee_ID", "Ghost_Column"]
     all_exist, missing_cols, results = check_columns_exist(
